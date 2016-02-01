@@ -42,4 +42,12 @@ public class TipoUsuarioService implements TipoUsuarioServiceInterface{
 		TipoUsuario ntipousuario = tipoUsuarioRepository.save(tipoUsuario);
 		return (ntipousuario == null) ? false : true;
 	}
+	@Override
+	public Boolean deleteTipoUsuario(int id) {
+		if(	tipoUsuarioRepository.exists(id)){	
+			tipoUsuarioRepository.delete(id);
+			return true;
+		}		
+		return false;
+	}
 }

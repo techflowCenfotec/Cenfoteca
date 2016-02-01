@@ -16,12 +16,12 @@ public class TipoUsuarioController {
 
 	@Autowired private TipoUsuarioServiceInterface tipoUsuarioService;
 	
-	@RequestMapping(value ="/getAll", method = RequestMethod.GET)
+	@RequestMapping(value ="/getAll", method = RequestMethod.POST)
 	public TipoUsuarioResponse getAll(){	
 			
 		TipoUsuarioResponse response = new TipoUsuarioResponse();
 		response.setCode(200);
-		response.setCodeMessage("users fetch success");
+		response.setCodeMessage("Lista de tipos de usuarios");
 		response.setTipoUsuarioList(tipoUsuarioService.getAll());
 		return response;	
 		
@@ -35,10 +35,22 @@ public class TipoUsuarioController {
 			
 		if(state){
 			rs.setCode(200);
-			rs.setCodeMessage("rent created succesfully");
+			rs.setCodeMessage("Usuario creado ");
 		}
 				
 		return rs;		
 	}
-
+	@RequestMapping(value ="/delete", method = RequestMethod.DELETE)
+	public TipoUsuarioResponse delete(@RequestBody int id){
+		
+		TipoUsuarioResponse rs = new TipoUsuarioResponse();
+		Boolean state = tipoUsuarioService.deleteTipoUsuario(id);
+		
+		if(state){
+			rs.setCode(200);
+			rs.setCodeMessage("Tipo usuario borrado de manera exitosa");
+			
+		}
+		return rs;
+	}
 }
