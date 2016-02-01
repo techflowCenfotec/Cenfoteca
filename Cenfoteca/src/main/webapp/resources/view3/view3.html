@@ -4,7 +4,31 @@
 </div>
 
 <div class="container">
+
+	
 	<div class="row">
-		 <div ui-grid="{ data: tipoUsuarioList }" class="myGrid"></div>
+		 <div ui-grid="gridOptions" ui-grid-edit ui-grid-row-edit ui-grid-cellNav class="myGrid"></div>
 	</div>
+		
+	<form id="createTipoUsuarioForm" name="createTipoUsuarioForm" class="form-horizontal" role="form">
+ 
+	  <div class='form-group'>
+	   <div ng-class="{error: onError && createTipoUsuarioForm.tipo.$invalid}">
+	    <label class='col-sm-3 control-label'>Tipo</label>
+	    <div class="col-sm-8">
+	     <input type="text" id="tipo" class="form-control"
+	      tipo="tipo" placeholder="Required" required
+	      ng-model="requestObject.tipo" 
+	     /> 
+	     <span
+	      ng-show="onError && createTipoUsuarioForm.tipo.$error.required"
+	      class="help-inline">Required
+	     </span>
+	    </div>
+	   </div>
+	  </div>
+	  
+	  <button class="btn btn-primary" ng-click="saveTipoUsuario($event)">Create</button>
+	  <!-- clear button todo -->	
+ 	</form>
 </div>

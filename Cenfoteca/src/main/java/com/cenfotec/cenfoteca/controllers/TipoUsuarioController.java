@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cenfotec.cenfoteca.contracts.TipoUsuarioResponse;
@@ -41,7 +42,7 @@ public class TipoUsuarioController {
 		return rs;		
 	}
 	@RequestMapping(value ="/delete", method = RequestMethod.DELETE)
-	public TipoUsuarioResponse delete(@RequestBody int id){
+	public TipoUsuarioResponse delete(@RequestParam("id")  int id){
 		
 		TipoUsuarioResponse rs = new TipoUsuarioResponse();
 		Boolean state = tipoUsuarioService.deleteTipoUsuario(id);
