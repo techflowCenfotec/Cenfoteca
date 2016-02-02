@@ -34,32 +34,27 @@ angular.module('myApp.view3', ['ngRoute','ui.grid', 'ui.grid.edit', 'ui.grid.row
 		
 	});
 	$scope.saveTipoUsuario = function(event){
-	     var data = {};
-	     
-	     //Objeto JSON que lleva solo el tipo
-	     data = {
-	       nombretipo : $scope.requestObject.tipo,
-	       
-	     };
-	     
-	     $http.post('rest/protected/tipoUsuario/create', data)
+	    
+	     $http.post('rest/protected/tipoUsuario/create', {nombretipo : $scope.requestObject.tipo})
 	     .success(function(data, status, config) {
 	            $scope.message = data;
+	            $scope.gridOptions.data.push(data.tipoUsuarioList[0]);
 	          }).error(function(data, status, config) {
 	            alert( "failure message: " + JSON.stringify({data: data}));
 	          }); 
 	    };
 	    
-	$scope.deleteTipoUsuario = function(id){
+	$scope.deleteTipoUsuario = function(id ){
 		
 		  var data = $.param({
               id: id,
           });
 		 console.log(data);
-		$http.delete('rest/protected/tipoUsuario/delete?'+data)
+		$http["delete"]('rest/protected/tipoUsuario/delete?'+data)
         .success(function (data, status, headers) {
-            $scope.ServerResponse = data;
-            
+            //$scope.ServerResponse = data;
+        	$scope.gridOptions.data = _.without($scope.gridOptions.data,_.findWhere($scope.gridOptions.data,{idtipo:id}));
+        	console.log($scope.gridOptions.data)
         });
 			
 	};

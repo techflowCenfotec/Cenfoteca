@@ -1,5 +1,7 @@
 package com.cenfotec.cenfoteca.controllers;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cenfotec.cenfoteca.contracts.TipoUsuarioResponse;
 import com.cenfotec.cenfoteca.ejb.TipoUsuario;
+import com.cenfotec.cenfoteca.pojo.TipoUsuarioPOJO;
 import com.cenfotec.cenfoteca.services.TipoUsuarioServiceInterface;
 
 @RestController
@@ -32,9 +35,16 @@ public class TipoUsuarioController {
 	public TipoUsuarioResponse create(@RequestBody TipoUsuario tUsuario){	
 		
 		TipoUsuarioResponse rs = new TipoUsuarioResponse();			
-		Boolean state = tipoUsuarioService.saveTipoUsuario(tUsuario);
-			
-		if(state){
+		TipoUsuario recentlyCreatedTipoUsuario = tipoUsuarioService.saveTipoUsuario(tUsuario);
+		
+		TipoUsuarioPOJO pojo = new TipoUsuarioPOJO();
+		pojo.setIdtipo(recentlyCreatedTipoUsuario.getIdtipo());
+		pojo.setNombretipo(recentlyCreatedTipoUsuario.getNombretipo());
+		
+		rs.setTipoUsuarioList(new ArrayList<TipoUsuarioPOJO>());
+		rs.getTipoUsuarioList().add(pojo);
+		
+		if(recentlyCreatedTipoUsuario != null){
 			rs.setCode(200);
 			rs.setCodeMessage("Usuario creado ");
 		}

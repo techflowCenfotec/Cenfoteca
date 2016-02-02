@@ -37,10 +37,9 @@ public class TipoUsuarioService implements TipoUsuarioServiceInterface{
 	}
 
 	@Override
-	public Boolean saveTipoUsuario(TipoUsuario tipoUsuario) {
-		BeanUtils.copyProperties(tipoUsuario.getNombretipo(), tipoUsuario);
+	public TipoUsuario saveTipoUsuario(TipoUsuario tipoUsuario) {
 		TipoUsuario ntipousuario = tipoUsuarioRepository.save(tipoUsuario);
-		return (ntipousuario == null) ? false : true;
+		return ntipousuario;
 	}
 	@Override
 	public Boolean deleteTipoUsuario(int id) {

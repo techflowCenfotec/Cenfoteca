@@ -8,6 +8,6 @@ import com.cenfotec.cenfoteca.pojo.TipoUsuarioPOJO;
 public interface TipoUsuarioServiceInterface {
 	List<TipoUsuarioPOJO> getAll();
 	TipoUsuario getTipoUsuarioById(int idTipoUsuario);
-	Boolean saveTipoUsuario(TipoUsuario tipoUsuario);
+	TipoUsuario saveTipoUsuario(TipoUsuario tipoUsuario);
 	Boolean deleteTipoUsuario(int id);
 }

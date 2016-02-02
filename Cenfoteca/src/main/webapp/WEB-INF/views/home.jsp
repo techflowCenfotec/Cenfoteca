@@ -34,6 +34,7 @@
   <script src="resources/bower_components/angular/angular.js"></script>
   <script src="resources/bower_components/angular-route/angular-route.js"></script>
   <script src="resources/bower_components/angular-ui-grid/ui-grid.min.js"></script>
+  <script src="resources/bower_components/underscore/underscore-min.js"></script>
   <script src="resources/non_bower_components/angular-file-upload-shim.min.js"></script>
   <script src="resources/non_bower_components/angular-file-upload.min.js"></script>
   <script src="resources/app.js"></script>
