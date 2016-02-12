@@ -1,8 +1,13 @@
 package com.cenfotec.cenfoteca.services;
 
+import java.util.List;
+
 import com.cenfotec.cenfoteca.ejb.Alquiler;
+import com.cenfotec.cenfoteca.pojo.AlquilerPOJO;
 
 
 public interface RentServiceInterface {
-	Boolean saveRent(Alquiler alquiler);
+	List<AlquilerPOJO> getAll();
+	Alquiler saveRent(Alquiler alquiler);
+	Boolean deleteRent(int idRent);
 }

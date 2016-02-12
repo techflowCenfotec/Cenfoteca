@@ -33,6 +33,7 @@ angular.module('myApp.view3', ['ngRoute','ui.grid', 'ui.grid.edit', 'ui.grid.row
 		$scope.gridOptions.data = $scope.tipoUsuarioList;
 		
 	});
+	
 	$scope.saveTipoUsuario = function(event){
 	    
 	     $http.post('rest/protected/tipoUsuario/create', {nombretipo : $scope.requestObject.tipo})

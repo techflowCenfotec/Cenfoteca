@@ -1,12 +1,16 @@
 package com.cenfotec.cenfoteca.pojo;
 
+import com.cenfotec.cenfoteca.ejb.TipoAlquiler;
+
 public class AlquilerPOJO{
 	
 	private int idAlquiler;
 	private String name;
 	private String description;
 	private String image;
+	private TipoAlquilerPOJO tipoAlquiler;
 	
+
 	public AlquilerPOJO() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -43,5 +47,11 @@ public class AlquilerPOJO{
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
+	public TipoAlquilerPOJO getTipoAlquiler() {
+		return tipoAlquiler;
+	}
+
+	public void setTipoAlquilerPOJO(TipoAlquilerPOJO tipoAlquiler) {
+		this.tipoAlquiler = tipoAlquiler;
+	}
 }

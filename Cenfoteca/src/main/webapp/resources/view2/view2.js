@@ -16,6 +16,24 @@ angular.module('myApp.view2', ['ngRoute'])
 	$scope.onError = false;
 	$scope.tipoAlquilerList = [];
 	$scope.requestObject = {};
+	$scope.gridOptions = {};
+	
+	 $scope.gridOptions.columnDefs = [
+	                                  { name: 'name', displayName: 'Nombre',enableCellEdit: true},
+	                                  { name: 'description', displayName: 'Descripcion'},
+	                                  { name: ' ',
+	                                      cellTemplate:'<button class="btn btn-danger" ng-click="grid.appScope.deleteRent(row.entity.idAlquiler)">Elimina'+
+	                                    	  '</button>&nbsp;&nbsp;&nbsp;<button class="btn btn-info" ng-click="grid.appScope.modifyRent(row.entity,row.entity.name,row.entity.description,row.entity.image)">Modificar</button>' },
+	                                ];
+	
+	 $http.post('rest/protected/rent/getAll',$scope.requestObject).success(function(response) {
+			console.log("response",response)
+			$scope.alquilerList = response.alquilerList;
+			console.log("$scope.alquilerList",$scope.alquilerList)
+			$scope.gridOptions.data = $scope.alquilerList;
+			$scope.btnCreateModify = "Create";
+		});
+	
 	
     $scope.init = function() {
     	
@@ -55,15 +73,49 @@ angular.module('myApp.view2', ['ngRoute'])
 					function(evt) {
 						console.log('percent: '+ parseInt(100.0 * evt.loaded / evt.total));
 					}).success(function(data, status, headers, config) {
-						// Rent is uploaded successfully
 						console.log(data);
+						$scope.gridOptions.data.push(data.alquilerList[0]);
+						$scope.requestObject.name="";
+						$scope.requestObject.description="";
+						$("#fileButton").replaceWith("<input id='fileButton' type='file' name='inputfile' required ng-file-select='onFileSelect($files)'>").html();
 					});
-	    			//.error(...)
-	    			//.then(success, error, progress); 
+	    			
     		}
     	}else{
     		$scope.onError = true;
     	}
     };
+    
+    $scope.deleteRent = function(id ){
+		console.log(id);
+		  var data = $.param({
+            id: id,
+        });
+		 console.log(data);
+		$http["delete"]('rest/protected/rent/delete?'+data)
+      .success(function (data, status, headers) {
+      	$scope.gridOptions.data = _.without($scope.gridOptions.data,_.findWhere($scope.gridOptions.data,{idAlquiler:id}));
+      	console.log($scope.gridOptions.data)
+      });
+			
+	};
+	$scope.modifyRent = function(idTipoAlquiler,name,description,image){
+		console.log(idTipoAlquiler);
+		$scope.requestObject.idTipoAlquiler =idTipoAlquiler;
+		$scope.btnCreateModify = "Modify"
+//		var data ={};
+//		
+//		data = {
+//			       nombretipo : nombre,
+//			       idtipo : id
+//		};
+//		
+//		$http.post('rest/protected/rent/create', data)
+//	    .success(function(data, status, config) {
+//	        $scope.message = data;
+//	      }).error(function(data, status, config) {
+//	        alert( "failure message: " + JSON.stringify({data: data}));
+//	      });  
+	};
     
 }]);

@@ -1,5 +1,7 @@
 package com.cenfotec.cenfoteca.controllers;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cenfotec.cenfoteca.contracts.RentResponse;
+import com.cenfotec.cenfoteca.contracts.TipoUsuarioResponse;
 import com.cenfotec.cenfoteca.ejb.Alquiler;
+import com.cenfotec.cenfoteca.ejb.TipoAlquiler;
+import com.cenfotec.cenfoteca.pojo.AlquilerPOJO;
+import com.cenfotec.cenfoteca.pojo.TipoAlquilerPOJO;
 import com.cenfotec.cenfoteca.services.RentServiceInterface;
 import com.cenfotec.cenfoteca.services.TipoAlquilerServiceInterface;
 import com.cenfotec.cenfoteca.utils.Utils;
@@ -44,11 +50,27 @@ public class RentController {
 			alquiler.setImage(resultFileName);
 			alquiler.setTipoAlquiler(tipoAlquilerService.getTipoAlquilerById(idTipoAlquiler));
 			
-			Boolean state = rentService.saveRent(alquiler);
+			Alquiler recentlyCreatedRent = rentService.saveRent(alquiler);
+		    TipoAlquilerPOJO tipoAlquilerPOJO = new TipoAlquilerPOJO();
+						
+			TipoAlquiler tipoAlquiler = recentlyCreatedRent.getTipoAlquiler();
 			
-			if(state){
+			AlquilerPOJO pojo = new AlquilerPOJO();
+			pojo.setDescription(recentlyCreatedRent.getDescription());
+			pojo.setName(recentlyCreatedRent.getName());
+			pojo.setIdAlquiler(recentlyCreatedRent.getIdAlquiler());
+			tipoAlquilerPOJO.setIdTipoAlquiler(tipoAlquiler.getIdTipoAlquiler());
+			pojo.setTipoAlquilerPOJO(tipoAlquilerPOJO);
+			
+			
+		
+			
+			rs.setAlquilerList(new ArrayList<AlquilerPOJO>());
+			rs.getAlquilerList().add(pojo);
+			
+			if(recentlyCreatedRent != null){
 				rs.setCode(200);
-				rs.setCodeMessage("rent created succesfully");
+				rs.setCodeMessage("Alquiler creado ");
 			}
 			
 		}else{
@@ -60,4 +82,27 @@ public class RentController {
 		return rs;		
 	}
 	
+	@RequestMapping(value ="/getAll", method = RequestMethod.POST)
+	public RentResponse getAll(){	
+			
+		RentResponse response = new RentResponse();
+		response.setCode(200);
+		response.setCodeMessage("Lista 	de alquileres");
+		response.setAlquilerList(rentService.getAll());
+		return response;	
+		
+	}
+	@RequestMapping(value ="/delete", method = RequestMethod.DELETE)
+	public TipoUsuarioResponse delete(@RequestParam("id")  int id){
+		
+		TipoUsuarioResponse rs = new TipoUsuarioResponse();
+		Boolean state = rentService.deleteRent(id);
+		
+		if(state){
+			rs.setCode(200);
+			rs.setCodeMessage("Alquiler borrado de manera exitosa");
+			
+		}
+		return rs;
+	}
 }

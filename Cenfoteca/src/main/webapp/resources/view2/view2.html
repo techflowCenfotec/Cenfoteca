@@ -1,5 +1,5 @@
 <div class="container">
-    <h3 class="text-center">Crear Alquiler</h3>
+    <h3 class="text-center">Alquiler</h3>
     <hr>
 </div>
 
@@ -59,7 +59,7 @@
 				<label class='col-sm-3 control-label'>Cover Image</label>
 				
 				<div class="col-sm-8">
-					<input type="file" name="inputfile" required ng-file-select="onFileSelect($files)" >
+					<input id="fileButton" type="file" name="inputfile" required ng-file-select="onFileSelect($files)" >
 					<span
 						ng-show="onError && createRentForm.inputfile.$error.required"
 						class="help-inline">Required
@@ -69,8 +69,14 @@
 			</div>
 		</div>
 		
-		<button class="btn btn-primary" ng-click="saveRent($event)">Create</button>
+		<button class="btn btn-primary" ng-click="saveRent($event)">{{btnCreateModify}}</button>
 		<!-- clear button todo -->
 		
 	</form>
+	
+	<div class="row">
+		 <div ui-grid="gridOptions" class="myGrid"></div>
+	</div>
+	
 </div>
+
